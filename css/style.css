@@ -1,0 +1,17 @@
+#infoBar {
+	float: left;
+	width: 20%;
+}
+#mineBoard {
+	float: left;
+}
+	#mineBoard table {
+		border: yellow solid 1px;
+	}
+		#mineBoard table td {
+			width: 25px;
+			height: 25px;
+			border: yellow solid 1px;
+			background-color: gray;
+		}
+

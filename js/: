@@ -1,0 +1,50 @@
+var MineSweeper = (function (window, document) {
+	"use strict";
+
+	var inner = {};
+
+	var View = function (html) {
+		var $html = $(html);
+
+		this.getLevel = function () {
+			return $html.find("#levelSelector").val();
+		};
+
+	};
+
+	var Service = function () {
+		var confTable = [
+			{
+				row: 9,
+				col: 9,
+				mineNum: 10,
+			}, 
+			{}, 
+			{},
+		];
+		this.getBoardConf = function (level) {
+			return confTable[level];
+		};
+	};
+
+	var Presenter = function (view, service) {
+		
+		function init() {
+			var level = view.getLevel();
+		};
+
+		init();
+	};
+
+	inner.View      = View;
+	inner.Presenter = Presenter;
+	inner.Service   = Service;
+
+	return inner;
+})(window, document);
+
+$(document).ready(function () {
+	var view      = new MineSweeper.View("#mineSweeper");
+	var service   = new MineSweeper.Service();
+	var presenter = new MineSweeper.Presenter(view, service);
+});

@@ -1,0 +1,32 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Mine Sweeper</title>
+<link rel="stylesheet" href="css/style.css" />
+<script src="js/jquery-1.11.1.js"></script>
+<script src="js/minesweeper.js"></script>
+</head>
+<body>
+<div id="mineSweeper">
+	<div id="infoBar">
+		<div id="levelInfo">
+			<select id="levelSelector">
+				<option value="0">初级</option>
+				<option value="1">中级</option>
+				<option value="2">高级</option>
+			</select>
+		</div>
+		<div id="mineNumInfo">
+			<img width=50 height=50 src="images/mine.png" />
+			<span id="mineNum"></span>
+		</div>
+		<div id="timerInfo">
+			<img width=50 height=50 src="images/clock.png" />
+			<span id="time">0</span>
+		</div>
+		<button id="startBtn">Start</button>
+	</div>
+	<div id="mineBoard"></div>
+</div>
+</body>
+</html>
