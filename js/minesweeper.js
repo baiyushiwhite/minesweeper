@@ -4,7 +4,7 @@ var MineSweeper = (function (window, document, $) {
 	var inner = {};
 
 	var View = function (html) {
-		var $html = $(html);
+		var $html = $(html), self = this;
 
 		this.addGameStartListener = function (handler) {
 			$html.find("#startBtn").click(function (eva) {
@@ -23,13 +23,37 @@ var MineSweeper = (function (window, document, $) {
 			for (var i = 0; i < boardConf.row; i++) {
 				var trElement = $("<tr></tr>").appendTo(tableElement);
 				for (var j = 0; j < boardConf.col; j++) {
-					var tdElement = $("<td row=" + i +" col=" + j + "></td>").appendTo(trElement);
+					$("<td></td>").appendTo(trElement).attr("row", i).attr("col", j);
 				}
 			}
 			$html.find("#mineNum").html(boardConf.mineNum);
 		};
 
 		this.addMouseClickListener = function (leftClickHandler, rightClickHandler) {
+			$html.find("#boardTable").find("td").mousedown(function (eva) {
+				eva.preventDefault();
+				if (eva.which === 1) {
+					self.showBlankBlock($(this));
+					leftClickHandler($(this).attr("row"), $(this).attr("col"));
+					$(this).unbind(eva);
+				} else if (eva.which === 3) {
+					self.switchStampMineBlock($(this));
+					rightClickHandler($(this).attr("row"), $(this).attr("col"));
+				}
+				eva.stopPropagation();
+			});
+		};
+
+		this.showBlankBlock = function ($ele) {
+			$ele.css("background-color", "white");
+		};
+
+		this.showMineNumBlock = function ($ele, mineNum) {
+			$("<img src='images/"+ mineNum +".png'>").appendTo($ele).attr("width", "25px").attr("height", "25px");
+		};
+
+		this.switchStampMineBlock = function ($ele) {
+			$("<img src='images/flag.png'>").appendTo($ele).attr("width", "25px").attr("height", "25px");
 		};
 	};
 
@@ -59,8 +83,8 @@ var MineSweeper = (function (window, document, $) {
 
 		this.initCurrentBoard = function () {
 			var minePositionList = [];
-			while (minePositionList.length < boardConf.mineNum) {
-				var minePosition = Math.floor(Math.random() * boardConf.row * boardConf.col);
+			while (minePositionList.length < currentBoard.mineNum) {
+				var minePosition = Math.floor(Math.random() * currentBoard.row * currentBoard.col);
 				if (minePositionList.indexOf(minePosition) < 0) {
 					minePositionList.push(minePosition);
 				}
